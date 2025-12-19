@@ -49,4 +49,15 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    //(PUT) - EDITAR LIVRO
+    @PutMapping("/{id}")
+    public ResponseEntity<BookResponseDTO> editBook(@RequestBody @Valid BookRequestDTO dto, @PathVariable Long id){
+        Book book = bookService.updateBook(id, dto);
+
+        BookResponseDTO response = new BookResponseDTO(book);
+
+        return ResponseEntity.ok(response);
+    }
+
+
 }
