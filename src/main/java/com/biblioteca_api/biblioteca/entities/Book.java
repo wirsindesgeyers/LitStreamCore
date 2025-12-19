@@ -26,7 +26,6 @@ public class Book {
     private String title;
 
     @Column(nullable = false, unique = true, length = 13)
-    @ISBN
     private String isbn;
 
     @Column(nullable = false)
