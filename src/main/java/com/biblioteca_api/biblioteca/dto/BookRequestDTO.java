@@ -1,5 +1,6 @@
 package com.biblioteca_api.biblioteca.dto;
 
+import com.biblioteca_api.biblioteca.entities.Book;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.ISBN;
 
@@ -27,4 +28,12 @@ public record BookRequestDTO(
 
 
 ) {
+    public Book toEntity() {
+        Book book = new Book();
+        book.setTitle(this.title());
+        book.setIsbn(this.isbn());
+        book.setPrice(this.price());
+        book.setPublishedDate(this.publishedDate());
+        return book;
+    }
 }
