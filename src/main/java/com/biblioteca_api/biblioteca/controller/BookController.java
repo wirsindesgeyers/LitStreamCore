@@ -1,15 +1,16 @@
 package com.biblioteca_api.biblioteca.controller;
 
 
+import com.biblioteca_api.biblioteca.dto.BookRequestDTO;
 import com.biblioteca_api.biblioteca.dto.BookResponseDTO;
 import com.biblioteca_api.biblioteca.entities.Book;
 import com.biblioteca_api.biblioteca.service.BookService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class BookController {
     private final BookService bookService;
 
     // (GET) - Livro pelo ID.
-    @GetMapping("{/id}")
+    @GetMapping("/{id}")
     public ResponseEntity<BookResponseDTO> getBookById(@PathVariable Long id){
         Book book = bookService.getBookById(id);
         BookResponseDTO response = new BookResponseDTO(book);
@@ -36,6 +37,16 @@ public class BookController {
                 .map(BookResponseDTO::new)
                 .toList();
         return ResponseEntity.ok(response);
+    }
+
+    //(POST) - Criar livro
+    @PostMapping
+    public ResponseEntity<BookResponseDTO> postBook(@RequestBody @Valid BookRequestDTO dto){
+        Book book = bookService.createBook(dto);
+
+        BookResponseDTO response = new BookResponseDTO(book);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 }
