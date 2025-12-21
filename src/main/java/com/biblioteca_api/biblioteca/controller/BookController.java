@@ -5,6 +5,7 @@ import com.biblioteca_api.biblioteca.dto.BookRequestDTO;
 import com.biblioteca_api.biblioteca.dto.BookResponseDTO;
 import com.biblioteca_api.biblioteca.entities.Book;
 import com.biblioteca_api.biblioteca.service.BookService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ public class BookController {
     private final BookService bookService;
 
     // (GET) - Livro pelo ID.
+    @Operation(summary = "Retorna o livro pelo id")
     @GetMapping("/{id}")
     public ResponseEntity<BookResponseDTO> getBookById(@PathVariable Long id){
         Book book = bookService.getBookById(id);
@@ -31,6 +33,7 @@ public class BookController {
 
     //(GET) - Todos os livros
     @GetMapping
+    @Operation(summary = "Retorna todos os livros")
     public ResponseEntity<List<BookResponseDTO>> getAllBooks (){
         List<Book> books = bookService.getAllBooks();
         List<BookResponseDTO> response = books.stream()
@@ -40,6 +43,7 @@ public class BookController {
     }
 
     //(POST) - Criar livro
+    @Operation(summary = "Cria um livro")
     @PostMapping
     public ResponseEntity<BookResponseDTO> postBook(@RequestBody @Valid BookRequestDTO dto){
         Book book = bookService.createBook(dto);
@@ -50,6 +54,7 @@ public class BookController {
     }
 
     //(PUT) - EDITAR LIVRO
+    @Operation(summary = "Edita um livro (por completo)")
     @PutMapping("/{id}")
     public ResponseEntity<BookResponseDTO> editBook(@RequestBody @Valid BookRequestDTO dto, @PathVariable Long id){
         Book book = bookService.updateBook(id, dto);
@@ -60,6 +65,7 @@ public class BookController {
     }
 
     //(DELETE) - DELETAR LIVRO
+    @Operation(summary = "Deleta um livro")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id){
         bookService.deleteBookById(id);
