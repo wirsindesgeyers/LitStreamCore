@@ -6,10 +6,9 @@ import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.ISBN;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -35,6 +34,15 @@ public class Book {
     @Column(name = "published_date", nullable = false)
     @PastOrPresent(message = "O livro não pode ter sido publicado no futuro.")
     private LocalDate publishedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
+
+    @OneToMany(mappedBy = "book")
+    private List<Loan> loans;
+
+
 
 
 }

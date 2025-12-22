@@ -11,7 +11,9 @@ public record BookResponseDTO(
         String title,
         String isbn,
         BigDecimal price,
-        LocalDate publishedDate
+        LocalDate publishedDate,
+        Long authorId,
+        String authorName
 
 
 ) {
@@ -21,7 +23,9 @@ public record BookResponseDTO(
                 book.getTitle(),
                 book.getIsbn(),
                 book.getPrice(),
-                book.getPublishedDate()
+                book.getPublishedDate(),
+                book.getAuthor().getId(),
+                book.getAuthor().getName()
         );
     }
 }

@@ -1,5 +1,6 @@
 package com.biblioteca_api.biblioteca.dto;
 
+import com.biblioteca_api.biblioteca.entities.Author;
 import com.biblioteca_api.biblioteca.entities.Book;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.ISBN;
@@ -24,16 +25,10 @@ public record BookRequestDTO(
 
         @NotNull(message = "O livro precisa de data de publicação")
         @PastOrPresent(message = "O livro não pode ser publicado no futuro")
-        LocalDate publishedDate
+        LocalDate publishedDate,
 
+        @NotNull
+        Long authorId
 
 ) {
-    public Book toEntity() {
-        Book book = new Book();
-        book.setTitle(this.title());
-        book.setIsbn(this.isbn());
-        book.setPrice(this.price());
-        book.setPublishedDate(this.publishedDate());
-        return book;
-    }
 }

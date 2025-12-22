@@ -2,7 +2,10 @@ package com.biblioteca_api.biblioteca.service;
 
 
 import com.biblioteca_api.biblioteca.dto.BookRequestDTO;
+import com.biblioteca_api.biblioteca.entities.Author;
 import com.biblioteca_api.biblioteca.entities.Book;
+import com.biblioteca_api.biblioteca.infra.exceptions.BookAlreadyExistsException;
+import com.biblioteca_api.biblioteca.repository.AuthorRepository;
 import com.biblioteca_api.biblioteca.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +20,7 @@ import java.util.NoSuchElementException;
 public class BookService {
 
     private final BookRepository bookRepository;
-
+    private final AuthorRepository authorRepository;
 
     // RETORNA O LIVRO COM O ID ESPECIFICADO
     public Book getBookById(Long id){
@@ -33,7 +36,24 @@ public class BookService {
 
     //CRIA O LIVRO
     public Book createBook(BookRequestDTO dto){
-        return bookRepository.save(dto.toEntity());
+
+        if (bookRepository.existsByIsbn(dto.isbn())) {
+            throw new BookAlreadyExistsException("Já existe um livro cadastrado com este ISBN.");
+        }
+
+        Author author = authorRepository.findById(dto.authorId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Autor não encontrado"));
+
+
+        Book book = new Book();
+        book.setTitle(dto.title());
+        book.setIsbn(dto.isbn());
+        book.setPrice(dto.price());
+        book.setPublishedDate(dto.publishedDate());
+
+        book.setAuthor(author);
+
+        return bookRepository.save(book);
     }
 
     //DELETA O LIVRO PELO ID
