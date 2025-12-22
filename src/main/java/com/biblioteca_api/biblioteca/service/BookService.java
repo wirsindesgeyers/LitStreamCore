@@ -4,6 +4,7 @@ package com.biblioteca_api.biblioteca.service;
 import com.biblioteca_api.biblioteca.dto.BookRequestDTO;
 import com.biblioteca_api.biblioteca.entities.Author;
 import com.biblioteca_api.biblioteca.entities.Book;
+import com.biblioteca_api.biblioteca.infra.exceptions.BookAlreadyExistsException;
 import com.biblioteca_api.biblioteca.repository.AuthorRepository;
 import com.biblioteca_api.biblioteca.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
