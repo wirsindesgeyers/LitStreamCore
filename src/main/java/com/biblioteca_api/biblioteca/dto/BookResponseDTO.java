@@ -15,7 +15,6 @@ public record BookResponseDTO(
         Long authorId,
         String authorName
 
-
 ) {
     public BookResponseDTO(Book book) {
         this(
@@ -25,7 +24,6 @@ public record BookResponseDTO(
                 book.getPrice(),
                 book.getPublishedDate(),
                 book.getAuthor().getId(),
-                book.getAuthor().getName()
-        );
+                book.getAuthor().getName());
     }
 }

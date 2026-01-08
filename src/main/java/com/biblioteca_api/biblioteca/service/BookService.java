@@ -4,11 +4,12 @@ import com.biblioteca_api.biblioteca.dto.BookRequestDTO;
 import com.biblioteca_api.biblioteca.entities.Author;
 import com.biblioteca_api.biblioteca.entities.Book;
 import com.biblioteca_api.biblioteca.infra.exceptions.BookAlreadyExistsException;
-import com.biblioteca_api.biblioteca.repository.AuthorRepository;
 import com.biblioteca_api.biblioteca.repository.BookRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class BookService {
     }
 
     // CRIA O LIVRO
+    @Transactional
     public Book createBook(BookRequestDTO dto) {
 
         if (bookRepository.existsByIsbn(dto.isbn())) {
@@ -52,12 +54,14 @@ public class BookService {
     }
 
     // DELETA O LIVRO PELO ID
+    @Transactional
     public void deleteBookById(Long id) {
         Book book = getBookById(id);
         bookRepository.delete(book);
     }
 
     // EDITA O LIVRO (PUT)
+    @Transactional
     public Book updateBook(Long id, BookRequestDTO dto) {
         Book book = getBookById(id);
         book.setTitle(dto.title());
@@ -74,6 +78,7 @@ public class BookService {
     }
 
     // ALTERA AUTOR DO LIVRO (PATCH)
+    @Transactional
     public Book alterAuthor(Long authorId, Long bookId) {
         Book book = getBookById(bookId);
 

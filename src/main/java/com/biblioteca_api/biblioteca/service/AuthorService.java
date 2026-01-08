@@ -2,6 +2,7 @@ package com.biblioteca_api.biblioteca.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.biblioteca_api.biblioteca.dto.AuthorRequestDTO;
@@ -24,12 +25,15 @@ public class AuthorService {
     }
 
     // DELETE AUTOR PELO ID
+    @Transactional
     public void deleteAuthorById(Long id) {
         getAuthorById(id);
         authorRepository.deleteById(id);
     }
 
     // CRIA UM AUTOR
+
+    @Transactional
     public Author createAuthor(AuthorRequestDTO dto) {
         Author author = new Author();
         author.setName(dto.name());
