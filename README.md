@@ -1,160 +1,200 @@
-# 📚 Biblioteca API
 
-A modern RESTful API for library management built with **Spring Boot 4** and **Java 21**.
+# 📚 Litstream Core
+
+<div align="center">
+
+![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=java&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0.1-brightgreen?style=for-the-badge&logo=spring-boot&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?style=for-the-badge&logo=postgresql&logoColor=white)
+![Flyway](https://img.shields.io/badge/Flyway-Enabled-red?style=for-the-badge&logo=flyway&logoColor=white)
+
+<br>
+
+**A modern RESTful API for library management, handling books, authors, loans, and user authentication.**
+
+[Getting Started](#-getting-started) • [API Documentation](#-api-documentation) • [Project Structure](#-project-structure)
+
+</div>
+
+---
 
 ## ✨ Features
 
-- **Book Management** – Full CRUD operations for books with ISBN validation
-- **Author Management** – Create and manage authors with their bibliographies
-- **User Management** – User registration with email validation
-- **Loan System** – Track book loans with expiration dates and return management
-- **API Documentation** – Interactive Swagger UI with OpenAPI 3.0
-- **Database Migrations** – Version-controlled schema with Flyway
+- **📚 Book Management** – Full CRUD operations for books with ISBN validation.
+- **✍️ Author Management** – Create and manage authors and link them to their bibliographies.
+- **👤 User Management** – User registration system with email validation.
+- **📅 Loan System** – Track book loans, manage expiration dates, and calculate fees.
+- **🔍 API Documentation** – Interactive Swagger UI with OpenAPI 3.0 integration.
+- **🗄️ Database Migrations** – Version-controlled schema management using Flyway.
 
 ## 🛠️ Tech Stack
 
 | Category | Technology |
 |----------|------------|
-| **Framework** | Spring Boot 4.0.1 |
 | **Language** | Java 21 |
+| **Framework** | Spring Boot 4.0.1 |
 | **Database** | PostgreSQL |
 | **ORM** | Spring Data JPA / Hibernate |
 | **Migrations** | Flyway |
-| **API Docs** | SpringDoc OpenAPI 3.0 |
+| **Documentation** | SpringDoc OpenAPI 3.0 |
 | **Validation** | Jakarta Bean Validation |
 | **Utilities** | Lombok |
 
 ## 📋 Prerequisites
 
-- Java 21+
-- PostgreSQL 15+
-- Maven 3.9+
+Before running the application, ensure you have the following installed:
+
+* **Java 21+**
+* **PostgreSQL 15+**
+* **Maven 3.9+**
 
 ## 🚀 Getting Started
 
 ### 1. Clone the repository
-
 ```bash
-git clone https://github.com/YOUR_USERNAME/Biblioteca-api.git
+git clone [https://github.com/YOUR_USERNAME/Biblioteca-api.git](https://github.com/YOUR_USERNAME/Biblioteca-api.git)
 cd Biblioteca-api
+
 ```
 
 ### 2. Configure the database
 
-Update `src/main/resources/application.properties`:
+Open `src/main/resources/application.properties` and update your PostgreSQL credentials:
 
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/biblioteca
 spring.datasource.username=your_username
 spring.datasource.password=your_password
+
 ```
 
 ### 3. Run the application
 
+You can run the application using the Maven wrapper:
+
 ```bash
 ./mvnw spring-boot:run
+
 ```
 
-The API will be available at `http://localhost:8081`
+The server will start at `http://localhost:8081`.
 
 ## 📖 API Documentation
 
-Once running, access the interactive API documentation:
+The API is fully documented using Swagger/OpenAPI. Once the application is running, you can access:
 
-- **Swagger UI**: http://localhost:8081/swagger-ui.html
-- **OpenAPI JSON**: http://localhost:8081/v3/api-docs
+* **Swagger UI (Interactive):** [http://localhost:8081/swagger-ui.html](https://www.google.com/search?q=http://localhost:8081/swagger-ui.html)
+* **OpenAPI JSON:** [http://localhost:8081/v3/api-docs](https://www.google.com/search?q=http://localhost:8081/v3/api-docs)
 
-## 🔗 API Endpoints
+## 🔗 Main Endpoints
 
-### Books
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/api/books` | Get all books |
-| `GET` | `/api/books/{id}` | Get book by ID |
-| `POST` | `/api/books` | Create a new book |
-| `PUT` | `/api/books/{id}` | Update a book |
-| `DELETE` | `/api/books/{id}` | Delete a book |
-| `PATCH` | `/api/books/{bookId}/author/{authorId}` | Assign author to book |
-
-### Authors
+### 📕 Books
 
 | Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/author` | Create a new author |
+| --- | --- | --- |
+| `GET` | `/api/books` | Retrieve all books |
+| `GET` | `/api/books/{id}` | Retrieve a book by ID |
+| `POST` | `/api/books` | Register a new book |
+| `PUT` | `/api/books/{id}` | Update book details |
+| `DELETE` | `/api/books/{id}` | Remove a book |
+| `PATCH` | `/api/books/{bookId}/author/{authorId}` | Assign an author to a book |
+
+### ✍️ Authors
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `POST` | `/api/author` | Register a new author |
+
+*(Full list of endpoints available in Swagger UI)*
 
 ## 🏗️ Project Structure
 
+The project follows a clean architecture pattern with separated concerns:
+
 ```
 src/main/java/com/biblioteca_api/biblioteca/
-├── BibliotecaApplication.java    # Application entry point
-├── controller/                   # REST controllers
+├── BibliotecaApplication.java      # Application entry point
+├── controller/                     # REST Controllers (API Layer)
 │   ├── BookController.java
 │   └── AuthorController.java
-├── dto/                          # Data Transfer Objects
-│   ├── BookRequestDTO.java
-│   ├── BookResponseDTO.java
-│   ├── AuthorRequestDTO.java
-│   └── AuthorResponseDTO.java
-├── entities/                     # JPA entities
+├── service/                        # Business Logic Layer
+├── repository/                     # Data Access Layer (Spring Data JPA)
+├── entities/                       # JPA Entities (Database Models)
 │   ├── Book.java
 │   ├── Author.java
 │   ├── User.java
 │   └── Loan.java
-├── infra/                        # Infrastructure & configs
-│   ├── GlobalExceptionHandler.java
-│   └── exceptions/
-├── repository/                   # Spring Data repositories
-└── service/                      # Business logic layer
+├── dto/                            # Data Transfer Objects
+│   ├── BookRequestDTO.java
+│   └── AuthorResponseDTO.java
+└── infra/                          # Infrastructure & Configs
+    ├── GlobalExceptionHandler.java
+    └── exceptions/
+
 ```
 
 ## 📝 Data Models
 
+<details>
+<summary><strong>Click to view Entity details</strong></summary>
+
 ### Book
-- `id` – Unique identifier
-- `title` – Book title (max 150 chars)
-- `isbn` – ISBN-13 (unique)
-- `price` – Book price
-- `publishedDate` – Publication date
-- `author` – Associated author
+
+* `id`: Unique identifier
+* `title`: Book title (max 150 chars)
+* `isbn`: ISBN-13 (Unique)
+* `price`: Monetary value
+* `publishedDate`: Date of publication
+* `author`: Relationship with Author entity
 
 ### Author
-- `id` – Unique identifier
-- `name` – Author name (max 100 chars)
-- `birthdate` – Date of birth
-- `books` – List of authored books
+
+* `id`: Unique identifier
+* `name`: Full name (max 100 chars)
+* `birthdate`: Date of birth
+* `books`: List of authored books
 
 ### User
-- `id` – Unique identifier
-- `email` – User email (unique)
-- `name` – User name
-- `password` – Encrypted password
+
+* `id`: Unique identifier
+* `email`: User email (Unique)
+* `name`: Full name
+* `password`: Encrypted password
 
 ### Loan
-- `id` – Unique identifier
-- `user` – Borrowing user
-- `book` – Borrowed book
-- `loanPrice` – Loan fee
-- `loanDate` – Start date
-- `expirationDate` – Due date
-- `returnDate` – Return date (nullable)
+
+* `id`: Unique identifier
+* `user`: Borrower
+* `book`: Borrowed item
+* `loanPrice`: Fee charged
+* `loanDate`: Start date
+* `expirationDate`: Due date
+* `returnDate`: Actual return date
+
+</details>
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions are welcome!
+
+1. Fork the project.
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the Branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is licensed under the **MIT License**.
 
 ---
 
 <div align="center">
-  
-**Made with ❤️ using Spring Boot**
+
+**Made with 💜 by [Your Name]**
 
 </div>
+
+```
+
+```
