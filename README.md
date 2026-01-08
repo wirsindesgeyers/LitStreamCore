@@ -191,7 +191,7 @@ This project is licensed under the **MIT License**.
 
 <div align="center">
 
-**Made with 💜 by [Your Name]**
+**Made with 💜 by Kauan**
 
 </div>
 
