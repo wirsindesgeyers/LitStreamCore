@@ -13,6 +13,8 @@ import com.biblioteca_api.biblioteca.dto.AuthorResponseDTO;
 import com.biblioteca_api.biblioteca.entities.Author;
 import com.biblioteca_api.biblioteca.service.AuthorService;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -24,7 +26,7 @@ public class AuthorController {
 
     // (POST) - CRIAR AUTOR.
     @PostMapping
-    public ResponseEntity<AuthorResponseDTO> createAuthor(AuthorRequestDTO data) {
+    public ResponseEntity<AuthorResponseDTO> createAuthor(@RequestBody @Valid AuthorRequestDTO data) {
 
         Author author = authorService.createAuthor(data);
 
