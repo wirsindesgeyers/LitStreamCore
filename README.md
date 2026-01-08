@@ -52,7 +52,7 @@ Before running the application, ensure you have the following installed:
 
 ### 1. Clone the repository
 ```bash
-git clone [https://github.com/wirsindesgeyers/LitStreamCore.git](https://github.com/wirsindesgeyers/LitStreamCore.git)
+git clone https://github.com/wirsindesgeyers/LitStreamCore.git
 cd Biblioteca-api
 
 ```
