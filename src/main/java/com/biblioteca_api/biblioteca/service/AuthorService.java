@@ -1,5 +1,7 @@
 package com.biblioteca_api.biblioteca.service;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,11 @@ public class AuthorService {
 
     }
 
+    // BUSCA TODOS OS AUTORES
+    public List<Author> getAllAuthors() {
+        return authorRepository.findAll();
+    }
+
     // DELETE AUTOR PELO ID
     @Transactional
     public void deleteAuthorById(Long id) {
@@ -42,4 +49,14 @@ public class AuthorService {
         return authorRepository.save(author);
     }
 
+    // EDITA UM AUTOR COMPLETAMENTE
+    @Transactional
+    public Author editAuthor(AuthorRequestDTO data, Long id) {
+        Author author = getAuthorById(id);
+
+        author.setBirthdate(data.birthDate());
+        author.setName(data.name());
+
+        return authorRepository.save(author);
+    }
 }
